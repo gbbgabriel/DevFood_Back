@@ -41,14 +41,6 @@ export class UserController {
     );
   }
 
-  @Roles(UserType.Admin, UserType.Root)
-  @Get('/:userId')
-  async getUserById(@Param('userId') userId: number): Promise<ReturnUserDto> {
-    return new ReturnUserDto(
-      await this.userService.getUserByIdUsingRelations(userId),
-    );
-  }
-
   @Roles(UserType.Admin, UserType.Root, UserType.User)
   @Patch()
   @UsePipes(ValidationPipe)
@@ -57,13 +49,5 @@ export class UserController {
     @UserId() userId: number,
   ): Promise<UserEntity> {
     return this.userService.updatePasswordUser(updatePasswordDTO, userId);
-  }
-
-  @Roles(UserType.Admin, UserType.Root, UserType.User)
-  @Get()
-  async getInfoUser(@UserId() userId: number): Promise<ReturnUserDto> {
-    return new ReturnUserDto(
-      await this.userService.getUserByIdUsingRelations(userId),
-    );
   }
 }

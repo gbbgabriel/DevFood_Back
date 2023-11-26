@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   forwardRef,
   Inject,
   Injectable,
@@ -12,10 +11,6 @@ import { CreateProductDTO } from './dtos/create-product.dto';
 import { ProductEntity } from './entities/product.entity';
 import { UpdateProductDTO } from './dtos/update-procut.dto';
 import { CountProduct } from './dtos/count-product.dto';
-import { SizeProductDTO } from '../correios/dto/size-product.dto';
-import { CorreiosService } from '../correios/correios.service';
-import { CdServiceEnum } from '../correios/enums/cd-service.enum';
-import { ReturnPriceDeliveryDto } from './dtos/return-price-delivery.dto';
 import { Pagination, PaginationMeta } from '../dtos/pagination.dto';
 
 const DEFAULT_PAGE_SIZE = 10;
@@ -29,8 +24,6 @@ export class ProductService {
 
     @Inject(forwardRef(() => CategoryService))
     private readonly categoryService: CategoryService,
-
-    private readonly correiosService: CorreiosService,
   ) {}
 
   async findAllPage(
@@ -151,31 +144,35 @@ export class ProductService {
     });
   }
 
+  async findProductsByCategoryId(
+    categoryId: number,
+    isRelations?: boolean,
+  ): Promise<ProductEntity[]> {
+    const relations = isRelations
+      ? {
+          category: true,
+        }
+      : undefined;
+
+    const products = await this.productRepository.find({
+      where: {
+        categoryId,
+      },
+      relations,
+    });
+
+    if (!products || products.length === 0) {
+      throw new NotFoundException('Produtos não encontrados');
+    }
+
+    return products;
+  }
+
   async countProdutsByCategoryId(): Promise<CountProduct[]> {
     return this.productRepository
       .createQueryBuilder('product')
       .select('product.category_id, COUNT(*) as total')
       .groupBy('product.category_id')
       .getRawMany();
-  }
-
-  async findPriceDelivery(cep: string, idProduct: number): Promise<any> {
-    const product = await this.findProductById(idProduct);
-
-    const sizeProduct = new SizeProductDTO(product);
-
-    const resultPrice = await Promise.all([
-      this.correiosService.priceDelivery(CdServiceEnum.PAC, cep, sizeProduct),
-      this.correiosService.priceDelivery(CdServiceEnum.SEDEX, cep, sizeProduct),
-      this.correiosService.priceDelivery(
-        CdServiceEnum.SEDEX_10,
-        cep,
-        sizeProduct,
-      ),
-    ]).catch(() => {
-      throw new BadRequestException('Error find delivery price');
-    });
-
-    return new ReturnPriceDeliveryDto(resultPrice);
   }
 }

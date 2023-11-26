@@ -100,11 +100,6 @@ describe('OrderService', () => {
         id: undefined,
       },
       relations: {
-        address: {
-          city: {
-            state: true,
-          },
-        },
         ordersProduct: {
           product: true,
         },
@@ -158,7 +153,7 @@ describe('OrderService', () => {
 
     expect(order).toEqual(orderMock);
     expect(spy.mock.calls[0][0]).toEqual({
-      addressId: createOrderPixMock.addressId,
+      numMesa: 1,
       date: new Date(),
       paymentId: paymentMock.id,
       userId: userEntityMock.id,

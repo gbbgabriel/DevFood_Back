@@ -47,7 +47,7 @@ describe('OrderController', () => {
         id: orderMock.id,
         date: orderMock.date.toString(),
         userId: orderMock.userId,
-        addressId: orderMock.addressId,
+        numMesa: 1,
         paymentId: orderMock.paymentId,
       },
     ]);
@@ -62,7 +62,7 @@ describe('OrderController', () => {
       id: orderMock.id,
       date: orderMock.date.toString(),
       userId: orderMock.userId,
-      addressId: orderMock.addressId,
+      numMesa: 1,
       paymentId: orderMock.paymentId,
     });
     expect(spy.mock.calls.length).toEqual(1);

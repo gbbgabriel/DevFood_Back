@@ -15,7 +15,6 @@ import { DeleteResult } from 'typeorm';
 import { Roles } from '../decorators/roles.decorator';
 import { UserType } from '../user/enum/user-type.enum';
 import { CreateProductDTO } from './dtos/create-product.dto';
-import { ReturnPriceDeliveryDto } from './dtos/return-price-delivery.dto';
 import { ReturnProduct } from './dtos/return-product.dto';
 import { UpdateProductDTO } from './dtos/update-procut.dto';
 import { ProductEntity } from './entities/product.entity';
@@ -25,7 +24,6 @@ import { ProductService } from './product.service';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Roles(UserType.Admin, UserType.Root, UserType.User)
   @Get()
   async findAll(): Promise<ReturnProduct[]> {
     return (await this.productService.findAll([], true)).map(
@@ -33,7 +31,6 @@ export class ProductController {
     );
   }
 
-  @Roles(UserType.Admin, UserType.Root, UserType.User)
   @Get('/page')
   async findAllPage(
     @Query('search') search?: string,
@@ -78,11 +75,12 @@ export class ProductController {
     return this.productService.updateProduct(updateProduct, productId);
   }
 
-  @Get('/:idProduct/delivery/:cep')
-  async findPriceDelivery(
-    @Param('idProduct') idProduct: number,
-    @Param('cep') cep: string,
-  ): Promise<ReturnPriceDeliveryDto> {
-    return this.productService.findPriceDelivery(cep, idProduct);
+  @Get('/category/:categoryId')
+  async findProductByCategory(
+    @Param('categoryId') categoryId: number,
+  ): Promise<ReturnProduct[]> {
+    return (
+      await this.productService.findProductsByCategoryId(categoryId, true)
+    ).map((product) => new ReturnProduct(product));
   }
 }

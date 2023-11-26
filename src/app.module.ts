@@ -2,9 +2,6 @@ import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { StateModule } from './state/state.module';
-import { CityModule } from './city/city.module';
-import { AddressModule } from './address/address.module';
 import { CacheModule } from './cache/cache.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
@@ -18,7 +15,6 @@ import { PaymentStatusModule } from './payment-status/payment-status.module';
 import { PaymentModule } from './payment/payment.module';
 import { OrderModule } from './order/order.module';
 import { OrderProductModule } from './order-product/order-product.module';
-import { CorreiosModule } from './correios/correios.module';
 
 @Module({
   imports: [
@@ -37,9 +33,6 @@ import { CorreiosModule } from './correios/correios.module';
       migrationsRun: true,
     }),
     UserModule,
-    StateModule,
-    CityModule,
-    AddressModule,
     CacheModule,
     AuthModule,
     JwtModule,
@@ -51,7 +44,6 @@ import { CorreiosModule } from './correios/correios.module';
     PaymentModule,
     OrderModule,
     OrderProductModule,
-    CorreiosModule,
   ],
   controllers: [],
   providers: [

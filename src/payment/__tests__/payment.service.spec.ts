@@ -83,7 +83,7 @@ describe('PaymentService', () => {
     expect(
       service.createPayment(
         {
-          addressId: createOrderCreditCardMock.addressId,
+          numMesa: 1,
         },
         [productMock],
         cartMock,

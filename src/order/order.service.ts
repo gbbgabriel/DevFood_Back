@@ -29,7 +29,7 @@ export class OrderService {
     payment: PaymentEntity,
   ): Promise<OrderEntity> {
     return this.orderRepository.save({
-      addressId: createOrderDTO.addressId,
+      num_mesa: createOrderDTO.numMesa,
       date: new Date(),
       paymentId: payment.id,
       userId,
@@ -88,11 +88,6 @@ export class OrderService {
         id: orderId,
       },
       relations: {
-        address: {
-          city: {
-            state: true,
-          },
-        },
         ordersProduct: {
           product: true,
         },

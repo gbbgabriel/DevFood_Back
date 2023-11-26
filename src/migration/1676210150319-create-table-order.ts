@@ -6,14 +6,13 @@ export class createTableOrder1676210150319 implements MigrationInterface {
             CREATE TABLE public.order (
                 id integer NOT NULL,
                 user_id int NOT NULL,
-                address_id int NOT NULL,
+                num_mesa int NOT NULL,
                 "date" timestamp without time zone DEFAULT now() NOT NULL,
                 payment_id int NOT NULL,
                 created_at timestamp without time zone DEFAULT now() NOT NULL,
                 updated_at timestamp without time zone DEFAULT now() NOT NULL,
                 primary key (id),
                 foreign key (user_id) references public.user(id),
-                foreign key (address_id) references public.address(id),
                 foreign key (payment_id) references public.payment(id)
             );
             
