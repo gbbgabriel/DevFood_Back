@@ -17,8 +17,9 @@ import { UserType } from '../user/enum/user-type.enum';
 import { CreateProductDTO } from './dtos/create-product.dto';
 import { ReturnProduct } from './dtos/return-product.dto';
 import { UpdateProductDTO } from './dtos/update-procut.dto';
-import { ProductEntity } from './entities/product.entity';
+
 import { ProductService } from './product.service';
+import { ProductEntity } from './entities/product.entity';
 
 @Controller('product')
 export class ProductController {
@@ -40,7 +41,6 @@ export class ProductController {
     return this.productService.findAllPage(search, size, page);
   }
 
-  @Roles(UserType.Admin, UserType.Root, UserType.User)
   @Get('/:productId')
   async findProductById(@Param('productId') productId): Promise<ReturnProduct> {
     return new ReturnProduct(
