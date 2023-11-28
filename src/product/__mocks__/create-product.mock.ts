@@ -5,5 +5,6 @@ export const createProductMock: CreateProductDTO = {
   categoryId: categoryMock.id,
   image: 'lkfdjsafkldsa',
   name: 'name mock product',
+  description: 'description mock product',
   price: 25.0,
 };

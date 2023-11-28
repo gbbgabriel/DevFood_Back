@@ -48,7 +48,6 @@ export class ProductController {
     );
   }
 
-  @Roles(UserType.Admin, UserType.Root)
   @UsePipes(ValidationPipe)
   @Post()
   async createProduct(

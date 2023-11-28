@@ -5,5 +5,6 @@ export const updateProductMock: UpdateProductDTO = {
   categoryId: categoryMock.id,
   image: 'kjbndabk',
   name: 'gdsaga',
+  description: 'gfdsgfdsgfdsg',
   price: 43.0,
 };

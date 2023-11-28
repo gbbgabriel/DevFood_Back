@@ -90,15 +90,11 @@ export class ProductService {
   }
 
   async createProduct(createProduct: CreateProductDTO): Promise<ProductEntity> {
+    console.log('oi');
     await this.categoryService.findCategoryById(createProduct.categoryId);
 
     return this.productRepository.save({
       ...createProduct,
-      weight: createProduct.weight || 0,
-      width: createProduct.width || 0,
-      length: createProduct.length || 0,
-      diameter: createProduct.diameter || 0,
-      height: createProduct.height || 0,
     });
   }
 

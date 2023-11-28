@@ -46,11 +46,7 @@ describe('ProductController', () => {
         name: productMock.name,
         price: productMock.price,
         image: productMock.image,
-        diameter: productMock.diameter,
-        height: productMock.height,
-        length: productMock.length,
-        weight: productMock.weight,
-        width: productMock.width,
+        description: productMock.description,
       },
     ]);
   });
@@ -63,11 +59,7 @@ describe('ProductController', () => {
       name: productMock.name,
       price: productMock.price,
       image: productMock.image,
-      diameter: productMock.diameter,
-      height: productMock.height,
-      length: productMock.length,
-      weight: productMock.weight,
-      width: productMock.width,
+      description: productMock.description,
     });
   });
 

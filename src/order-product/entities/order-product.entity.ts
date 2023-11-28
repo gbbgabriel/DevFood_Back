@@ -1,4 +1,4 @@
-import { OrderEntity } from '../../order/entities/order.entity';
+import { OrderEntity } from 'src/order/entities/order.entity';
 import { ProductEntity } from '../../product/entities/product.entity';
 import {
   Column,
