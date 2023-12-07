@@ -12,6 +12,7 @@ import { ProductEntity } from './entities/product.entity';
 import { UpdateProductDTO } from './dtos/update-procut.dto';
 import { CountProduct } from './dtos/count-product.dto';
 import { Pagination, PaginationMeta } from '../dtos/pagination.dto';
+import { CartProductService } from '../cart-product/cart-product.service';
 
 const DEFAULT_PAGE_SIZE = 10;
 const FIRST_PAGE = 1;
@@ -24,6 +25,9 @@ export class ProductService {
 
     @Inject(forwardRef(() => CategoryService))
     private readonly categoryService: CategoryService,
+
+    @Inject(forwardRef(() => CartProductService))
+    private readonly cartProductService: CartProductService,
   ) {}
 
   async findAllPage(
@@ -90,7 +94,6 @@ export class ProductService {
   }
 
   async createProduct(createProduct: CreateProductDTO): Promise<ProductEntity> {
-    console.log('oi');
     await this.categoryService.findCategoryById(createProduct.categoryId);
 
     return this.productRepository.save({
@@ -123,9 +126,18 @@ export class ProductService {
   }
 
   async deleteProduct(productId: number): Promise<DeleteResult> {
-    await this.findProductById(productId);
+    // Antes de excluir, remove todos os produtos associados aos carrinhos
+    await this.cartProductService.deleteAllProductsFromCart(productId);
 
-    return this.productRepository.delete({ id: productId });
+    // Agora, pode excluir o produto
+    const result = await this.productRepository.delete({ id: productId });
+
+    // Verifica se pelo menos uma linha foi afetada
+    if (result.affected === 0) {
+      throw new NotFoundException(`Product id: ${productId} not found`);
+    }
+
+    return result;
   }
 
   async updateProduct(

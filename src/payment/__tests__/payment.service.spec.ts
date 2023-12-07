@@ -83,7 +83,8 @@ describe('PaymentService', () => {
     expect(
       service.createPayment(
         {
-          numMesa: 1,
+          num_mesa: 1,
+          description: 'description',
         },
         [productMock],
         cartMock,

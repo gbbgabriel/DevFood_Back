@@ -21,7 +21,10 @@ export class OrderEntity {
   userId: number;
 
   @Column({ name: 'num_mesa', nullable: false })
-  numMesa: number;
+  num_mesa: number;
+
+  @Column({ name: 'description', nullable: true })
+  description?: string;
 
   @Column({ name: 'date', nullable: false })
   date: Date;

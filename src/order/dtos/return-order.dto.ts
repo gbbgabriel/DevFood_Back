@@ -7,7 +7,8 @@ export class ReturnOrderDTO {
   id: number;
   date: string;
   userId: number;
-  numMesa: number;
+  num_mesa: number;
+  description?: string;
   paymentId: number;
   user?: ReturnUserDto;
   payment?: ReturnPaymentDTO;
@@ -17,6 +18,8 @@ export class ReturnOrderDTO {
   constructor(order?: OrderEntity) {
     this.id = order?.id;
     this.date = order?.date.toString();
+    this.num_mesa = order?.num_mesa;
+    this.description = order?.description;
     this.userId = order?.userId;
     this.paymentId = order?.paymentId;
     this.user = order?.user ? new ReturnUserDto(order?.user) : undefined;

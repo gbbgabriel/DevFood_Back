@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Res,
   UsePipes,
@@ -64,5 +66,10 @@ export class OrderController {
     return new ReturnOrderDTO(
       (await this.orderService.findOrdersByUserId(undefined, orderId))[0],
     );
+  }
+
+  @Delete(':id')
+  async deleteOrder(@Param('id', ParseIntPipe) orderId: number): Promise<void> {
+    await this.orderService.deleteOrder(orderId);
   }
 }

@@ -13,9 +13,9 @@ export class ReturnPaymentDTO {
   constructor(payment: PaymentEntity) {
     this.id = payment.id;
     this.statusId = payment.statusId;
-    this.price = payment.price;
-    this.discount = payment.discount;
-    this.finalPrice = payment.finalPrice;
+    this.price = Number(payment.price.toFixed(2));
+    this.discount = Number(payment.discount.toFixed(2));
+    this.finalPrice = Number(payment.finalPrice.toFixed(2));
     this.type = payment.type;
     this.paymentStatus = payment.paymentStatus
       ? new ReturnPaymentStatus(payment.paymentStatus)

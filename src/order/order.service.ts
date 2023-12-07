@@ -29,7 +29,8 @@ export class OrderService {
     payment: PaymentEntity,
   ): Promise<OrderEntity> {
     return this.orderRepository.save({
-      num_mesa: createOrderDTO.numMesa,
+      num_mesa: createOrderDTO.num_mesa,
+      description: createOrderDTO.description,
       date: new Date(),
       paymentId: payment.id,
       userId,
@@ -105,6 +106,29 @@ export class OrderService {
     return orders;
   }
 
+  async findOrderById(orderId: number): Promise<OrderEntity> {
+    const order = await this.orderRepository.findOne({
+      where: {
+        id: orderId,
+      },
+      relations: {
+        ordersProduct: {
+          product: true,
+        },
+        payment: {
+          paymentStatus: true,
+        },
+        user: true,
+      },
+    });
+
+    if (!order) {
+      throw new NotFoundException('Order not found');
+    }
+
+    return order;
+  }
+
   async findAllOrders(): Promise<OrderEntity[]> {
     const orders = await this.orderRepository.find({
       relations: {
@@ -134,5 +158,19 @@ export class OrderService {
       }
       return order;
     });
+  }
+
+  async deleteOrder(orderId: number): Promise<void> {
+    const order = await this.orderRepository.findOne({
+      where: { id: orderId },
+      relations: ['ordersProduct'],
+    });
+
+    if (!order) {
+      throw new NotFoundException('Order not found');
+    }
+
+    await this.orderProductService.deleteOrderProductsByOrderId(order.id);
+    await this.orderRepository.remove(order);
   }
 }

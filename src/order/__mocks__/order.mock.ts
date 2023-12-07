@@ -3,7 +3,8 @@ import { userEntityMock } from '../../user/__mocks__/user.mock';
 import { OrderEntity } from '../entities/order.entity';
 
 export const orderMock: OrderEntity = {
-  numMesa: 1,
+  num_mesa: 1,
+  description: 'description',
   createdAt: new Date(),
   date: new Date(),
   id: 453543,

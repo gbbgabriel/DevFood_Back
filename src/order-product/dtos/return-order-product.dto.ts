@@ -16,7 +16,7 @@ export class ReturnOrderProductDTO {
     this.orderId = orderProduct.orderId;
     this.productId = orderProduct.productId;
     this.amount = orderProduct.amount;
-    this.price = orderProduct.price;
+    this.price = Number(orderProduct.price.toFixed(2));
     this.order = orderProduct.order
       ? new ReturnOrderDTO(orderProduct.order)
       : undefined;

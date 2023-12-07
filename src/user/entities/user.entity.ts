@@ -37,6 +37,6 @@ export class UserEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToMany(() => OrderEntity, (order) => order.numMesa)
+  @OneToMany(() => OrderEntity, (order) => order.num_mesa)
   orders?: OrderEntity[];
 }

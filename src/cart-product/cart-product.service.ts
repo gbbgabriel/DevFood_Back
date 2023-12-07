@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InsertCartDTO } from '../cart/dtos/insert-cart.dto';
 import { UpdateCartDTO } from '../cart/dtos/update-cart.dto';
@@ -12,6 +17,8 @@ export class CartProductService {
   constructor(
     @InjectRepository(CartProductEntity)
     private readonly cartProductRepository: Repository<CartProductEntity>,
+
+    @Inject(forwardRef(() => ProductService))
     private readonly productService: ProductService,
   ) {}
 
@@ -80,6 +87,10 @@ export class CartProductService {
       ...cartProduct,
       amount: updateCartDTO.amount,
     });
+  }
+
+  async deleteAllProductsFromCart(productId: number): Promise<DeleteResult> {
+    return this.cartProductRepository.delete({ productId });
   }
 
   async deleteProductCart(

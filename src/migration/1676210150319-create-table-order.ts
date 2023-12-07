@@ -7,6 +7,7 @@ export class createTableOrder1676210150319 implements MigrationInterface {
                 id integer NOT NULL,
                 user_id int NOT NULL,
                 num_mesa int NOT NULL,
+                description varchar(255),
                 "date" timestamp without time zone DEFAULT now() NOT NULL,
                 payment_id int NOT NULL,
                 created_at timestamp without time zone DEFAULT now() NOT NULL,

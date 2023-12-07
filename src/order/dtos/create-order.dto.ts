@@ -2,7 +2,11 @@ import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateOrderDTO {
   @IsNumber()
-  numMesa: number;
+  num_mesa: number;
+
+  @IsOptional()
+  @IsString()
+  description: string;
 
   @IsOptional()
   @IsNumber()

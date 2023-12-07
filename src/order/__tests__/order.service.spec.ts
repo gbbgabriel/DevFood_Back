@@ -153,7 +153,9 @@ describe('OrderService', () => {
 
     expect(order).toEqual(orderMock);
     expect(spy.mock.calls[0][0]).toEqual({
-      numMesa: 1,
+      num_mesa: 1,
+      description: orderMock.description,
+
       date: new Date(),
       paymentId: paymentMock.id,
       userId: userEntityMock.id,
